@@ -1,0 +1,11 @@
+{
+    "clientName": "Client-name",
+    "restUrl":"\\storage\\backup\\restic",
+    "emailSettings": {
+        "smtpServer": "mail.domain.tld",
+        "smtpFrom": "backup@domain.tld",
+        "smtpTo": "user@domain.tld",
+        "smtpCredentialUser": "backup@domain.tld",
+        "smtpCredentialPassword": "another-super-password"
+    }
+}

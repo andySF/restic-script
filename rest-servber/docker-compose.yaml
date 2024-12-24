@@ -1,0 +1,37 @@
+version: '3.8'
+
+networks:
+  static-network:
+    external: true
+    name: "static-network"
+
+services:
+  restic-rest-server:
+    image: "restic/rest-server"
+    container_name: "restic-rest-server"
+    hostname: "restic-server"
+    command:
+      - "/entrypoint.sh"
+    environment:
+      DATA_DIRECTORY: "/data"
+      OPTIONS: "--private-repos --prometheus --prometheus-no-auth --debug"
+      PASSWORD_FILE: "/data/.htpasswd"
+    expose:
+      - "8000"
+    networks:
+      - static-network
+    volumes:
+      - "/your-data/restic/metrics:/metrics"
+      - "/your-data/restic/rest-server-data:/data"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "10m"
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
